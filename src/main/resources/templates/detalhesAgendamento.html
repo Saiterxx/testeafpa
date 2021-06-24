@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Detalhes do Agendamento</title>
+    <style>
+        table,
+        th,
+        td {
+            border: 1px solid black;
+        }
+    </style>
+</head>
+<body>
+    <h1>Detalhes do Agendamento</h1>
+    <a href="/menu">Menu</a>
+    <a href="/agendamentos">Agendamentos</a>
+    <br>
+    <br>
+    <b>ID: </b> <span th:text="${agendamento.id}"></span>
+    <br><b>Cliente: </b> <span th:text="${agendamento.cliente}"></span>
+    <br><b>Barbeiro: </b> <span th:text="${agendamento.barbeiro}"></span>
+    <br><b>Data: </b> <span th:text="${agendamento.data}"></span>
+    <br><b>Filial: </b> <span th:text="${agendamento.filial}"></span>
+   
+    <body>
+        <h1>Editar Agendamento</h1>    
+        <br>
+        <br>
+        <form th:action="@{/salvarAgendamento}" th:object="${agendamento}" method="POST" id="formAgendamento">
+          
+            <label>ID do agendamento:</label> <span th:text="${agendamento.id}"></span>
+            <br>
+            <input type="hidden" th:value="${agendamento.id}" th:field="${agendamento.id}" name="id" />
+            <label>Cliente:</label>
+                <select th:field="${agendamento.cliente}" required>
+                    <option value="">Escolha o cliente</option>
+                    <option th:each="cliente : ${clientes}"
+                                th:value="${cliente.id}"
+                                th:text="${cliente.nome}">
+                    </option>       
+                </select>
+                <label>Barbeiro:</label>
+                <select th:field="${agendamento.barbeiro}" required>
+                    <option value="">Escolha o barbeiro</option>
+                    <option th:each="barbeiro : ${barbeiros}"
+                                th:value="${barbeiro.id}"
+                                th:text="${barbeiro.nome}">
+                    </option>       
+                </select>
+                <label>Filial:</label>
+                <select th:field="${agendamento.filial}" required>
+                    <option value="">Escolha a filial</option>
+                    <option th:each="filial : ${filiais}"
+                                th:value="${filial.id}"
+                                th:text="${filial.endereco}">
+                    </option>       
+                </select>
+            <label>Data:</label>
+            <input type="text" placeholder="Digite a Data" name="data" required/>
+            <br>
+            <input type="submit" value="Salvar" />
+            <input type="reset"  value="Cancelar"/>
+        </form>
+
+</body>
+</html>

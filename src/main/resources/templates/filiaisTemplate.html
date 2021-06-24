@@ -1,0 +1,54 @@
+  
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Filiais</title>
+    
+    <style>
+        table, th, td {
+          border: 1px solid black;
+        }
+    </style>
+
+</head>
+
+<body>
+    <h1>Cadastro de Filiais</h1>    
+    <a href="/menu">Menu</a>
+    <a href="/clientes">Clientes</a>
+    <a href="/barbeiros">Barbeiros</a>
+    <a href="/agendamentos">Agendamentos</a>
+    <br>
+    <br>
+    <form th:action="@{/salvarFilial}" method="POST">
+        <label>Endereço:</label>
+        <input type="text" placeholder="Digite o endereço" name="endereco" required/>
+        <label>Telefone</label>
+        <input type="text" placeholder="Digite o Telefone" name="Telefone" required/>
+        <input type="submit" value="Salvar" />
+    </form>
+    <br>
+    <br>
+    <table>
+        <tr>
+            <th>Código</th>
+            <th>Endereço</th>
+            <th>Telefone</th>
+            <th>Detalhes/Editar</th>
+            <th>Remover</th>
+        </tr>
+       
+        <tr th:each="filial : ${filiais}">
+            <td th:text="${filial.id}"></td>
+            <td th:text="${filial.endereco}"></td>
+            <td th:text="${filial.telefone}"></td>
+            <td> <a th:href="@{'/detalhesFilial/' + ${filial.id}}">Detalhes/Editar</a></td>
+            <td> <a th:href="@{'/removerFilial?id=' + ${filial.id}}">Remover</a></td>
+        </tr>
+    </table>
+</body>
+
+</html>

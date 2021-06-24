@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Detalhes do Barbeiro</title>
+    <style>
+        table,
+        th,
+        td {
+            border: 1px solid black;
+        }
+    </style>
+</head>
+<body>
+    <h1>Detalhes do Barbeiro</h1>
+    <a href="/menu">Menu</a>
+    <a href="/barbeiros">Barbeiros</a>
+    <br>
+    <br>
+    <b>ID: </b> <span th:text="${barbeiro.id}"></span>
+    <br><b>Nome: </b> <span th:text="${barbeiro.nome}"></span>
+    <br><b>Preço: </b> <span th:text="${barbeiro.salario}"></span>
+   
+
+    <br>
+    Agendamentos:
+            <table>
+                <tr>
+                    <th>id do Agendamento</th>
+                    <th>Cliente</th>
+                    <th>Filial</th>
+                    <th>Data</th>
+                    <th>Detalhes</th>
+                </tr>
+               
+                <tr th:each="agendamento : ${agendamentos}">
+                    <td th:text="${agendamento.id}"></td>
+                    <td th:text="${agendamento.cliente}"></td>
+                    <td th:text="${agendamento.filial}"></td>
+                    <td th:text="${agendamento.data}"></td>
+                    <td> <a th:href="@{'/detalhesAgendamento/' + ${agendamento.id}}">Detalhes</a></td>
+                </tr>
+            </table>
+            <br>
+    <br>
+    Filiais Associadas:
+    <table>
+        <tr>
+            <th>Id Filial</th>
+            <th>Endereço</th>
+            <th>Telefone</th>
+            <th>Detalhes</th>
+        </tr>
+       
+        <tr th:each="filial : ${barbeiro.filiais}">
+            <td th:text="${filial.id}"></td>
+            <td th:text="${filial.endereco}"></td>
+            <td th:text="${filial.telefone}"></td>
+            <td> <a th:href="@{'/detalhesFilial/' + ${filial.id}}">Detalhes</a></td>
+        </tr>
+    </table>
+    <br>
+    <br>
+            <form th:action="@{/associarFilialBarbeiro(codigoBarbeiro=${barbeiro.id})}" method="POST">
+            <label><b>Filiais:</b></label>
+            <select name="id" required>
+                <option value="">Escolha a filial</option>
+                <option th:each="filial : ${filiais}"
+                            th:value="${filial.id}"
+                            th:text="${filial.endereco}">
+                </option>
+            </select>
+            <input type="submit" value="Associar Filial" />
+        </form>
+
+        <body>
+            <h1>Editar Barbeiro</h1>    
+            <br>
+            <br>
+            <form th:action="@{/salvarBarbeiro}" th:object="${barbeiro}" method="POST" id="formBarbeiro">
+              
+                <label>ID do Barbeiro:</label> <span th:text="${barbeiro.id}"></span>
+                <br>
+                <input type="hidden" th:value="${barbeiro.id}" th:field="${barbeiro.id}" name="id" />
+                <input type="hidden" th:value="${barbeiro.filiais}" th:field="${barbeiro.filiais}" name="filiais" />
+
+                <label>Nome:</label>
+                <input type="text" placeholder="Digite o nome" th:value="${barbeiro.nome}" name="nome" required/>
+                <br>  
+                <label>Salario:</label>
+                <input type="number" placeholder="Digite o Salario" name="Salario" required/>
+                <br>
+                <input type="submit" value="Salvar" />
+                <input type="reset"  value="Cancelar"/>
+            </form>
+            
+</body>
+</html>

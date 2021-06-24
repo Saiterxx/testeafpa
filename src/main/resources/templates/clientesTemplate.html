@@ -1,0 +1,54 @@
+  
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Clientes</title>
+    
+    <style>
+        table, th, td {
+          border: 1px solid black;
+        }
+    </style>
+
+</head>
+
+<body>
+    <h1>Cadastro de Clientes</h1>    
+    <a href="/menu">Menu</a>
+    <a href="/filiais">Filiais</a>
+    <a href="/barbeiros">Barbeiros</a>
+    <a href="/agendamentos">Agendamentos</a>
+    <br>
+    <br>
+    <form th:action="@{/salvarCliente}" method="POST">
+        <label>Nome:</label>
+        <input type="text" placeholder="Digite o nome" name="nome" required/>
+        <label>Telefone</label>
+        <input type="text" placeholder="Digite o Telefone" name="Telefone" required/>
+        <input type="submit" value="Salvar" />
+    </form>
+    <br>
+    <br>
+    <table>
+        <tr>
+            <th>Código</th>
+            <th>Nome</th>
+            <th>Telefone</th>
+            <th>Detalhes/Editar</th>
+            <th>Remover</th>
+        </tr>
+       
+        <tr th:each="cliente : ${clientes}">
+            <td th:text="${cliente.id}"></td>
+            <td th:text="${cliente.nome}"></td>
+            <td th:text="${cliente.telefone}"></td>
+            <td> <a th:href="@{'/detalhesCliente/' + ${cliente.id}}">Detalhes/Editar</a></td>
+            <td> <a th:href="@{'/removerCliente?id=' + ${cliente.id}}">Remover</a></td>
+        </tr>
+    </table>
+</body>
+
+</html>

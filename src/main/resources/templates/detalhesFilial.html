@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Detalhes da Filial</title>
+    <style>
+        table,
+        th,
+        td {
+            border: 1px solid black;
+        }
+    </style>
+</head>
+<body>
+    <h1>Detalhes da Filial</h1>
+    <a href="/menu">Menu</a>
+    <a href="/barbeiros">Filiais</a>
+    <br>
+    <br>
+    <b>ID: </b> <span th:text="${filial.id}"></span>
+    <br><b>Endereco: </b> <span th:text="${filial.endereco}"></span>
+    <br><b>Telefone: </b> <span th:text="${filial.telefone}"></span>
+   
+
+    <br>
+    <br>
+    Barbeiros Associados:
+    <table>
+        <tr>
+            <th>Id</th>
+            <th>Nome</th>
+            <th>Salario</th>
+            <th>Detalhes</th>
+        </tr>
+       
+        <tr th:each="barbeiro : ${filial.barbeiros}">
+            <td th:text="${barbeiro.id}"></td>
+            <td th:text="${barbeiro.nome}"></td>
+            <td th:text="${barbeiro.salario}"></td>
+            <td> <a th:href="@{'/detalhesBarbeiro/' + ${barbeiro.id}}">Detalhes</a></td>
+        </tr>
+    </table>
+    <br>
+    <br>
+
+        <body>
+            <h1>Editar Filial</h1>    
+            <br>
+            <br>
+            <form th:action="@{/salvarFilial}" th:object="${filial}" method="POST" id="formFilial">
+              
+                <label>ID da Filial:</label> <span th:text="${filial.id}"></span>
+                <br>
+                <input type="hidden" th:value="${filial.id}" th:field="${filial.id}" name="id" />
+                <input type="hidden" th:value="${filial.barbeiros}" th:field="${filial.barbeiros}" name="barbeiros" />
+                <label>Endereço:</label>
+                <input type="text" placeholder="Digite o endereço" th:value="${filial.endereco}" name="endereco" required/>
+                <br>  
+                <label>Telefone:</label>
+                <input type="text" placeholder="Digite o Telefone" name="telefone" required/>
+                <br>
+                <input type="submit" value="Salvar" />
+                <input type="reset"  value="Cancelar"/>
+            </form>
+
+</body>
+</html>
